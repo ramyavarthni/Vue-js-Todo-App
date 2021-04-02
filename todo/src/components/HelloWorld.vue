@@ -85,20 +85,12 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-li {
-    font: 1rem 'Fira Sans', sans-serif;
-    margin-bottom: .5rem;
-}
 h1 {
   color: blue;
   text-align: center;
 }
 h3 {
   color: red;
-  text-align: center;
-}
-li {
-  color: black;
   text-align: center;
 }
 button {
@@ -111,9 +103,6 @@ button {
   font-size: 15px;
   margin: 4px 2px;
   cursor: pointer;
-}
-button.update {
-  color: red;
 }
 input {
   padding: 7px 15px;
