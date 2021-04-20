@@ -4,14 +4,13 @@
   <div v-if = "!isEditing">
   <label> Add Todo Task: </label>
   <input type="text" v-model="todo" v-on:keyup.enter= "addTodo" value="addTodo" placeholder="what you want to do?">
-  <button @click= "addTodo">Add</button>
+  <button  @click= "addTodo">Add</button>
   <button @click= "cancelTodo()">Cancel</button>
   <ul> Typing: {{ todo }}</ul>
   </div>
   <div v-else>
    <input type="text" v-model="todo">
   <button type="submit" value="update" @click= "updateTodo">Update</button>
-  <button @click= "cancelTodo()">Cancel</button>
   </div>
   <div>
   <h2> My Current Task - {{ remaining }} </h2>
@@ -20,9 +19,9 @@
   </template>
   <template v-else>
   <ol>
-     <li v-for="(todo , index) in todos" :key="index">
-        {{ todo | capitalize }}
-       <button v-on:click="editTodo(index, todo)">Edit</button>
+     <li v-for="(todo , index) in todos" :key="index"  :class="{ done }"  @click="$emit('on-toggle')">
+        {{index + 1}} . {{ todo | capitalize }}
+       <button @click="editTodo(index, todo)">Edit</button>
        <button v-on:click="removeTodo(index)">Remove</button>
      </li>
      <button @click= "clearall()">Clear All</button>
@@ -37,7 +36,8 @@ export default {
   data () {
     return {
       isEditing: false,
-      selectedIndex: null,
+      done: false,
+      selectedIndex: '',
       todo: '',
       todos: []
     }
@@ -56,9 +56,11 @@ export default {
   },
   methods: {
     addTodo () {
-      console.log('todo:' + this.todo)
-      this.todos.push(this.todo)
-      this.todo = ''
+      if (this.todo.length > 0) {
+        console.log('todo:' + this.todo)
+        this.todos.splice(0, 0, this.todo)
+        this.todo = ''
+      }
     },
     editTodo (index, todo) {
       this.todo = todo
@@ -78,6 +80,9 @@ export default {
     },
     clearall () {
       this.todos = []
+    },
+    toggleTodo (todo) {
+      todo.done = !todo.done
     }
   }
 }
@@ -110,5 +115,8 @@ input {
 }
 label {
   font-size: 24px;
+}
+.done {
+  text-decoration: line-through;
 }
 </style>
